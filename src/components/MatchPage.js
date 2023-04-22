@@ -10,27 +10,43 @@ import hamster5 from '../images/hamster5.jpeg';
 
 function MatchPage(props) {
 
+  const image = document.querySelector('.rectangle-image img');
   const hamsterImages = [ hamster2, hamster3, hamster4, hamster5];
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  //const [showConfirmation, setShowConfirmation] = useState(true);
 
   function handleNextImage() {
     setSelectedImageIndex((prevIndex) => {
       const nextIndex = prevIndex + 1;
-      return nextIndex < hamsterImages.length ? nextIndex : 0;
+      
+      //this line should be removed since we don't want repeated images
+      let res=nextIndex < hamsterImages.length ? nextIndex : 0;
+
+
+      image.classList.add('swipe-up');
+      setTimeout(() => {
+        image.src = hamsterImages[res];
+        image.classList.remove('swipe-up');
+      }, 100);
+      return res;
     });
   }
 
   const selectedImage = hamsterImages[selectedImageIndex];
 
   const handleYesClick = () => {
-    // handle yes click here
+    // handle yes click here, add to contact list, mark as seen
+
     
+    //handle next image
+    handleNextImage();
   };
 
   const handleNoClick = () => {
-    // handle no click here
+    // handle no click here, mark as seen
     
+
+    //handle next image
+    handleNextImage();
   };
 
   return (
@@ -43,8 +59,8 @@ function MatchPage(props) {
 
      
         <div className="button-container">
-          <button onClick={handleNextImage}>Like</button>
-          <button onClick={handleNextImage}>Pass</button>
+          <button onClick={handleYesClick}>Like</button>
+          <button onClick={handleNoClick}>Pass</button>
         </div>
       
     </div>

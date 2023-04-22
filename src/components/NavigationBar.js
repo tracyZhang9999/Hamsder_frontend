@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import './NavigationBar.css'
 
 function Sidebar(props) {
-    //contacts should be fetched from backend database
-  //const [contacts, setContacts] = useState(['Contact 1', 'Contact 2', 'Contact 3']);
-
+//contacts should be fetched from backend database
   const myContacts = [
     { id: 1, title: 'Contact 1' },
     { id: 2, title: 'Contact 2' },
@@ -14,6 +12,10 @@ function Sidebar(props) {
     { id: 5, title: 'Contact 5' },
   ];
 
+  //fecth my user info from backend
+  const myIcon="/hamster1.jpeg";
+  const myName="Yuna";
+
 
   const logoutHandler = (event) => {
     props.setLoginStatus(false);
@@ -21,14 +23,14 @@ function Sidebar(props) {
     console.log("loginStatus:false")
     window.location.href = '/';
   };
-// <Link to={'/chat/${contact.id}'}>{contact.title}</Link>
+
   return (
     
     <div className="sidebar">
       <div className="profile-sidebar">
         <Link to="/profile" onClick={() => window.location.href="/profile"}>
-          <img src="/hamster1.jpeg" alt="Your Profile" />
-          <h3>Yuna</h3>
+          <img src={myIcon} alt="Your Profile" />
+          <h3>{myName}</h3>
         </Link>
       </div>
      
