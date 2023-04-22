@@ -1,0 +1,56 @@
+.sidebar {
+    position: fixed;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 90%;
+    background-color: #f8f8f8;
+    padding: 30px;
+    overflow-y: scroll;
+  }
+  
+  .profile-sidebar {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+ 
+  .match-page h3{
+    text-align: center;
+    margin-bottom: 10px;
+   
+  }
+  
+  .profile-sidebar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  
+  .contacts {
+    margin-top: 0px;
+  }
+  
+  .contacts h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .contacts ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .contacts li {
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  .logout {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  

@@ -1,0 +1,25 @@
+/* Center the content vertically and horizontally */
+.profile div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Style the profile icon */
+  .profile img {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+  }
+  
+  /* Style the profile name */
+  .profile h1 {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
