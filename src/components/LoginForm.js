@@ -59,6 +59,8 @@ function LoginForm (props){
         <MatchPage />
       ) : (
     //
+    <div className="login-logo">
+    <img  src="/HamsderLogo.png" alt="Logo" />
     <form className="login-form" onSubmit={handleSubmit}>
       <label className="title">Login</label>
       <label>
@@ -74,6 +76,8 @@ function LoginForm (props){
       <button type="submit" >Login</button>
       <p>Not a member yet? <Link to="/register" onClick={() => window.location.href="/register"} >Register here</Link></p>
     </form>
+    </div>
+
       )}
     </div>
   );

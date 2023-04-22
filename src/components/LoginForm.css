@@ -6,6 +6,11 @@
     display: flex;
     justify-content: center;
   }
+.login-logo img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
 .login-form {
     display: flex;
     flex-direction: column;

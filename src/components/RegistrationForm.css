@@ -7,7 +7,11 @@
     justify-content: center;
   }
   
-
+  .register-logo img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
 
 .registration-form {
     display: flex;
@@ -56,5 +60,10 @@
   .registration-form p {
     margin-top: 20px;
     font-size: 0.8rem;
+  }
+
+  .registration-form email{
+    font-size: 1.2rem;
+    left:0;
   }
   

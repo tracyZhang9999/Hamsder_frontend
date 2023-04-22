@@ -11,6 +11,9 @@ import hamster5 from '../images/hamster5.jpeg';
 function MatchPage(props) {
 
   const image = document.querySelector('.rectangle-image img');
+
+ 
+
   const hamsterImages = [ hamster2, hamster3, hamster4, hamster5];
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 

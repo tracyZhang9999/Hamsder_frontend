@@ -6,7 +6,7 @@ function RegistrationForm(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [sex, setSex] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -22,17 +22,14 @@ function RegistrationForm(props) {
     setPassword(event.target.value);
   };
 
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
    
-    if(password!=confirmPassword){
-      alert('Passwords do not match!');
-      return;
-    }
+   
     const new_user = {
       username: username,
       password: password,
@@ -61,14 +58,19 @@ function RegistrationForm(props) {
   };
 
   return (
-    <div>
+    <div className="register-logo">
 
-    
+    <img  src="/HamsderLogo.png" alt="Logo" />
     <form className="registration-form" onSubmit={handleSubmit}>
     <label className="title">Registration</label>
       <label>
         Username:
         <input type="text" value={username} onChange={handleUsernameChange} />
+      </label>
+
+      <label>
+        Password:
+        <input type="password" value={password} onChange={handlePasswordChange} />
       </label>
       
       <label >Select gender:
@@ -80,17 +82,11 @@ function RegistrationForm(props) {
       </select>
       </label>
 
-      <br />
-      <label>
-        Password:
-        <input type="password" value={password} onChange={handlePasswordChange} />
+      
+      <label className='email'> Email:
+        <input type="email" value={email} onChange={handleEmailChange} />
       </label>
-      <br />
-      <label>
-        Confirm Password:
-        <input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} />
-      </label>
-      <br />
+      
       <button type="submit">Register</button>
       <p>Already have an account? <Link to="/" onClick={() => window.location.href="/"} >Login here</Link></p>
     </form>
