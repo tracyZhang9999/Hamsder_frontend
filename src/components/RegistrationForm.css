@@ -62,8 +62,23 @@
     font-size: 0.8rem;
   }
 
-  .registration-form email{
-    font-size: 1.2rem;
-    left:0;
+
+  .special-label{
+    margin-left:-50px;
   }
+
+  .special-label2{
+    margin-left:110px;
+  }
+
+  #email-input{
+    width: 120%;
+    max-width: 300px; 
+    
+  }
+  #file-input{
+    width: 69%;
+    max-width: 280px;
+  }
+
   

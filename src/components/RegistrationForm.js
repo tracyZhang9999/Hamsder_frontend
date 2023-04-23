@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './RegistrationForm.css';
 
 function RegistrationForm(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [sex, setSex] = useState('');
+  const [selectedGender, setSelectedGender] = useState('');
   const [email, setEmail] = useState('');
+  const [image, setImage] = useState(null);
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
 
-  const [selectedGender, setSelectedGender] = useState('');
+  
 
   const handleSelectChange = (event) => {
     setSelectedGender(event.target.value);
@@ -28,31 +30,31 @@ function RegistrationForm(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("sex", selectedGender);
+    formData.append("image", image);
    
-   
+    /*
     const new_user = {
       username: username,
+      email:email,
       password: password,
-      sex: selectedGender
-    };
+      sex: selectedGender,
+      image:image
+    };*/
+
+
      //  registration logic here, post to backend
-     fetch('/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(new_user)
-    })
-    .then(response => {
-      if (response.ok) {
-        // Registration was successful, handle accordingly
-      } else {
-        // Registration failed, handle accordingly
-      }
-    })
-    .catch(error => {
-      // Handle error
-    });
+     axios.post('/api/register', formData)
+     .then(response => {
+       console.log(response.data);
+     })
+     .catch(error => {
+       console.log(error.response.data);
+     });
     
 
   };
@@ -83,8 +85,12 @@ function RegistrationForm(props) {
       </label>
 
       
-      <label className='email'> Email:
-        <input type="email" value={email} onChange={handleEmailChange} />
+      <label className="special-label"> Email:
+        <input id="email-input" type="email" value={email} onChange={handleEmailChange} />
+      </label>
+
+      <label className="special-label2">Upload Icon
+        <input id="file-input" type="file" onChange={(e) => setImage(e.target.files[0])} />
       </label>
       
       <button type="submit">Register</button>
