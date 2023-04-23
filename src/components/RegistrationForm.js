@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './RegistrationForm.css';
+import LoginForm from './LoginForm';
 
-function RegistrationForm(props) {
+function RegistrationForm({setLoginStatus, setUserID, loginStatus}) {
+  const [registerStatus, SetRegisterStatus] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [selectedGender, setSelectedGender] = useState('');
+  //const [selectedGender, setSelectedGender] = useState('');
   const [email, setEmail] = useState('');
   const [image, setImage] = useState(null);
 
@@ -15,10 +17,10 @@ function RegistrationForm(props) {
   };
 
   
-
+/*
   const handleSelectChange = (event) => {
     setSelectedGender(event.target.value);
-  };
+  };*/
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -30,36 +32,61 @@ function RegistrationForm(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    
     const formData = new FormData();
-    formData.append("username", username);
+    formData.append("name", username);
     formData.append("email", email);
     formData.append("password", password);
-    formData.append("sex", selectedGender);
-    formData.append("image", image);
+    //formData.append("sex", selectedGender);
+    formData.append("profile_picture", image);
    
     /*
-    const new_user = {
-      username: username,
-      email:email,
-      password: password,
-      sex: selectedGender,
-      image:image
+    const user = {
+       name: username,
+       password: password,
+       email:email,
+      //sex: selectedGender,
+      profile_picture:image
     };*/
 
 
      //  registration logic here, post to backend
-     axios.post('/api/register', formData)
-     .then(response => {
-       console.log(response.data);
-     })
-     .catch(error => {
-       console.log(error.response.data);
-     });
-    
+     const createUser = async (userData) => {
+      try {
+        const response = await axios.post('http://localhost:8080/api/users', userData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log(response.data);
+        // Handle success
+        SetRegisterStatus(true);
+      } catch (error) {
+        console.error(error.response);
+        // Handle error
+      }
+    }
 
+    createUser(formData);
+     /*
+     <label >Select gender:
+      <select id="gender-select" value={selectedGender} onChange={handleSelectChange}>
+        <option value="">--Please select--</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        
+      </select>
+      </label>*/
+
+    
+     
   };
 
   return (
+    <div>
+      {registerStatus ? (
+        <LoginForm setUserID={setUserID} setLoginStatus={setLoginStatus} loginStatus={loginStatus}/>
+      ) : (
     <div className="register-logo">
 
     <img  src="/HamsderLogo.png" alt="Logo" />
@@ -75,14 +102,7 @@ function RegistrationForm(props) {
         <input type="password" value={password} onChange={handlePasswordChange} />
       </label>
       
-      <label >Select gender:
-      <select id="gender-select" value={selectedGender} onChange={handleSelectChange}>
-        <option value="">--Please select--</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        
-      </select>
-      </label>
+      
 
       
       <label className="special-label"> Email:
@@ -97,6 +117,8 @@ function RegistrationForm(props) {
       <p>Already have an account? <Link to="/" onClick={() => window.location.href="/"} >Login here</Link></p>
     </form>
     </div>
+     )}
+     </div>
     
   );
 };

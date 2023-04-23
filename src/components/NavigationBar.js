@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React , { useEffect, useState }from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './NavigationBar.css'
 
@@ -14,7 +15,7 @@ function Sidebar(props) {
 
   //fecth my user info from backend
   const myIcon="/hamster1.jpeg";
-  const myName="Yuna";
+  //const myName="Yuna";
 
 
   const logoutHandler = (event) => {
@@ -23,14 +24,31 @@ function Sidebar(props) {
     console.log("loginStatus:false")
     window.location.href = '/';
   };
+  const [username, setUsername] = useState('');
+  const [icon, setIcon] = useState('');
+  const id=localStorage.getItem('userID');
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/users/${id}`)
+      .then(response => {
+        // Handle the profile response from the API
+        setUsername(response.data.name);
+        setIcon(response.data.profile_picture);
+      })
+      .catch(error => {
+        // Handle any errors that occurred during the request
+        console.error(error);
+        alert('An error occurred while fetching profile information.');
+      });
+  }, []);
 
   return (
     
     <div className="sidebar">
       <div className="profile-sidebar">
         <Link to="/profile" onClick={() => window.location.href="/profile"}>
-          <img src={myIcon} alt="Your Profile" />
-          <h3>{myName}</h3>
+          <img src={`http://localhost:8080/uploads/${icon}`} alt="Your Profile" />
+          <h3>{username}</h3>
         </Link>
       </div>
      

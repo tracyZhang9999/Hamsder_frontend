@@ -13,13 +13,18 @@ import ChatBox from './components/chat';
 function App() {
 
   const [loginStatus, setLoginStatus] = useState(false);
+  const [userID, setUserID] = useState(0);
   //this status need to be updated by login form
 
   useEffect(() => {
     // Check local storage for login status on app load
     const storedLoginStatus = localStorage.getItem('loginStatus');
+    const storedUserID = localStorage.getItem('userID');
     if (storedLoginStatus === 'true') {
       setLoginStatus(true);
+    }
+    if (storedUserID != 0 ) {
+      setUserID(storedUserID);
     }
   }, []);
 
@@ -35,16 +40,16 @@ function App() {
      
       <Switch>
           <Route exact path="/">
-            <LoginForm setLoginStatus={setLoginStatus} loginStatus={loginStatus}/>
+            <LoginForm setUserID={setUserID} setLoginStatus={setLoginStatus} loginStatus={loginStatus}/>
             </Route> 
           <Route path="/register">
-            <RegistrationForm/>
+            <RegistrationForm setUserID={setUserID} setLoginStatus={setLoginStatus} loginStatus={loginStatus}/>
             </Route> 
           <Route path="/match">
             <MatchPage/>
             </Route> 
           <Route path="/profile">
-            <ProfilePage/>
+            <ProfilePage userID={userID}/>
             </Route> 
           <Route path="/chat">
             <ChatBox/>

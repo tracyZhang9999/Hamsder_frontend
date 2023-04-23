@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LoginForm.css';
 import MatchPage from './MatchPage';
-import ProfilePage from './Profile';
+import axios from 'axios';
 
-function LoginForm (props){
-  const [username, setUsername] = useState('');
+function LoginForm ({setLoginStatus, setUserID, loginStatus}){
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (event) => {
@@ -20,34 +20,46 @@ function LoginForm (props){
   const handleSubmit = (event) => {
     event.preventDefault();
     //  dummy login code for testing
-    if(username=="test" && password=="123"){
-      props.setLoginStatus(true);
+    /*
+    if(email=="test" && password=="123"){
+      setLoginStatus(true);
       localStorage.setItem('loginStatus', 'true');
       console.log("loginStatus:true")
       return;
-    }
+    }*/
 
     const user = {
-      username: username,
+      email: email,
       password: password
     };
     //post login data to backend, do some code like:
 
-    fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(user)
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the API
-        console.log(data);
+    axios.post('http://localhost:8080/api/users/login', user, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.data.success) {
+          // If login is successful, do something here (e.g. redirect to home page)
+          console.log('Login successful!');
+
+          setLoginStatus(true);
+          localStorage.setItem('loginStatus', 'true');
+          setUserID(response.data.id);
+          localStorage.setItem('userID', response.data.id);
+          console.log(response.data.id);
+          //console.log("loginStatus:true")
+        } else {
+          // If login is not successful, display an alert
+          alert(response.data.message);
+        }
+        console.log(response.data);
       })
       .catch(error => {
         // Handle any errors that occurred during the request
         console.error(error);
+        alert('An error occurred during login.');
       });
   };
 
@@ -55,7 +67,7 @@ function LoginForm (props){
 
   return (
     <div>
-      {props.loginStatus ? (
+      {loginStatus ? (
         <MatchPage />
       ) : (
     //
@@ -64,8 +76,8 @@ function LoginForm (props){
     <form className="login-form" onSubmit={handleSubmit}>
       <label className="title">Login</label>
       <label>
-        Username:
-        <input type="text" value={username} onChange={handleUsernameChange} />
+        Email:
+        <input type="text" value={email} onChange={handleEmailChange} />
       </label>
       <br />
       <label>
